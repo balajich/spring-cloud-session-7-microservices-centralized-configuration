@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: mail-client
+  zipkin:
+    sender:
+      type: rabbit
+  sleuth:
+    sampler:
+      probability:  1.0
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: queue.email
+          binder: local_rabbit
+          group: emailconsumers
+      binders:
+        local_rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+                virtual-host: /
+
+management:
+  health:
+    binders:
+      enabled: true

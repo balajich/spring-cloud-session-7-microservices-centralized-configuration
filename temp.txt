@@ -1,0 +1,5 @@
+vagrant scp ./ ccdockerserver:/vagrant
+vagrant scp  docker-compose.yml ccdockerserver:/vagrant/docker-compose.yml
+vagrant scp  build.sh ccdockerserver:/vagrant/build.sh
+vagrant scp  test.sh ccdockerserver:/vagrant
+docker-compose up -d --scale zipkin=1

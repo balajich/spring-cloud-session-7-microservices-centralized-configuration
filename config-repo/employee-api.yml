@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: employee-api
+  zipkin:
+    sender:
+      type: rabbit
+  sleuth:
+    sampler:
+      probability:  1.0
+
+server:
+  port: ${PORT:0}
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

@@ -1,0 +1,28 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: file:${PWD}/config-repo
+  zipkin:
+    sender:
+      type: rabbit
+  sleuth:
+    sampler:
+      probability:  1.0
+
+management:
+  endpoint:
+    health:
+      show-details: "ALWAYS"
+
+  endpoints:
+    web:
+      exposure:
+        include: "*"
