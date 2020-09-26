@@ -1,12 +1,6 @@
 spring:
   application:
     name: mail-client
-  zipkin:
-    sender:
-      type: rabbit
-  sleuth:
-    sampler:
-      probability:  1.0
   cloud:
     stream:
       bindings:

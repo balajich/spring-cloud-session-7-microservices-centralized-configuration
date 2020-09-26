@@ -93,3 +93,6 @@ yum install -y unzip
 echo "[TASK 16] Install dos2unix"
 yum install -y dos2unix
 
+# install jq
+echo "[TASK 17] Install jq"
+yum install -y jq

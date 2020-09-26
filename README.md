@@ -1,34 +1,16 @@
-# Spring Cloud Session-6 Microservices Distributed Tracing
-In  this tutorial we are going to learn how to trace a message that is going across multiple microservices.In micorservices 
-landscape it is common to have multiple cooperating microservices. It is important for us to understand how the call is 
-flowing across these services.
+# Spring Cloud Session-7 Centralized Configuration
+In  this tutorial we are going to learn how to manage configurations of microservices. The configurations  
+of microservices are saved in central configuration server.We are going to use **spring-cloud-config-server** to centrally
+manage configurations.
 
 **Overview**
-- When user wants to get employee report the report is served by report-api microservice.
-- Call flow: Browser -> gateway->report-api (report-api synchronous calls employee-api,payroll-api and asynchronusly calls mail-client)
-- Complete(Request and Response) flow: 
-    - browser->gateway-> report-api
-    - report-api(synch)->gateway->employee-api
-    - report-api(synch)->gateway->payroll-api
-    - report-api(asynch)-> RabittMQ (MessageBus)
-    - response is served to browser             
-- The above request flow is really complex, and it is really tough to understand if there is intermediately failure or slowness.
-- We will be using **Spring Cloud Sleuth** and **Zipkin** to trace the call flow.
-
-**Terminology**
-- Trace or Trace tree: The complete request flow is called trace or trace tree
-- Span: The basic unit of work are called Span. Spans can consist of sub spans forming the trace tree.
-**Flow**
-- Each and every microservice (gateway,employee-api,payroll-api,report-api,mail-client,registry) has sleuth and zipkin components
-- When a request to comes to microservice sleuth adds traceid and zipkin clients send this traceid to MessageBus (RabbitMQ)
-- traceids are saved in **zipkin queue** in RabbitMQ
-- Zipkin server reads this trace information from queue and computes the callflow.
-- Zipkin UI can be used to view call trace
-- Run RabbitMQ server, it binds to port 5672 and admin ui application to port 15672.
-- Run Zipkin UI server 9411
+- Start spring-cloud-config-server on port 8888
+- All (gateway,registry,employee-api,payroll-api,report-api,mail-client) the microservices when starting they are going 
+to read configurations from configuration server microservice (config-server).
+- config-server is going to store configurations in file system
 
 # Source Code 
-``` git clone https://github.com/balajich/spring-cloud-session-7-microservices-distributed-tracing.git``` 
+``` git clone https://github.com/balajich/spring-cloud-session-7-microservices-centralized-configuration.git``` 
 # Video
 [![Spring Cloud Session 4 Inter Microservice Communication ASynchronous using RabbitMQ](https://img.youtube.com/vi/8CV8PDX8Kuc/0.jpg)](https://www.youtube.com/watch?v=8CV8PDX8Kuc)
 - https://youtu.be/8CV8PDX8Kuc
@@ -43,21 +25,21 @@ flowing across these services.
 # Start RabbitMQ, Zipkin Servers and Build Microservices
 We will be running RabbitMQ,Zipkin server inside a docker container. I am running docker container on CentOS7 virtual machine. 
 I will be using vagrant to stop or start a virtual machine.
+
+**Note:Zipkin is used for distributed tracing, Please follow my session-6 to understand it better**
 - RabbitMQ & Zipkin Server
-    - ``` cd spring-cloud-session-7-microservices-distributed-tracing ```
+    - ``` cd  spring-cloud-session-7-microservices-centralized-configuration ```
     - Bring virtual machine up ``` vagrant up ```
     - ssh to virtual machine ```vagrant ssh ```
     - Switch to root user ``` sudo su - ```
     - Change folder where docker-compose files is available ```cd /vagrant```
     - Start RabbitMQ & Zipkin Server using docker-compose ``` docker-compose up -d ```
 - Java
-    - ``` cd spring-cloud-session-7-microservices-distributed-tracing ```
+    - ``` cd  spring-cloud-session-7-microservices-centralized-configuration ```
     - ``` mvn clean install ```
-# RabbitMQ Server UI
-![RabbitMQUI](RabbitMQUI.png "RabbitMQUI")
-# Zipkin
-![zipkinui](zipkinui.png "zipkinui")
+
 # Running components
+- Config Server: ``` java -jar .\config-server\target\config-server-0.0.1-SNAPSHOT.jar ```
 - Registry: ``` java -jar .\registry\target\registry-0.0.1-SNAPSHOT.jar ```
 - Employee API: ``` java -jar .\employee-api\target\employee-api-0.0.1-SNAPSHOT.jar ```
 - Payroll API: ``` java -jar .\payroll-api\target\payroll-api-0.0.1-SNAPSHOT.jar ```
@@ -67,11 +49,10 @@ I will be using vagrant to stop or start a virtual machine.
 
 # Using curl to test environment
 **Note I am running CURL on windows, if you have any issue. Please use postman client, its collection is available 
-at  spring-cloud-session-7-microservices-distributed-tracing.postman_collection.json**
-- Access RabbitMQ UI: ```http://localhost:15672/  ```
-- RabbitMQ defaults username/password: ``` guest/guest ```
-- Access Zipkin UI: ``` ```
+at  spring-cloud-session-7-microservices-centralized-configuration.postman_collection.json**
 - Get employee report using report api ( direct): ``` curl -s -L  http://localhost:8080/report-api/100 ```
+- Get Configurations of employee-api  with **default** profile``` curl -s -L http://localhost:8888/employee-api/default ```
+- Get Configurations of report-api  with **default** profile``` curl -s -L http://localhost:8888/report-api/default ```
  
 # Code
 In this section we will focus only employee-api and add sleuth and zipkin as dependency. This will automatically enable

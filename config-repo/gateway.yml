@@ -3,12 +3,6 @@ server:
 spring:
   application:
     name: gateway
-  zipkin:
-    sender:
-      type: rabbit
-  sleuth:
-    sampler:
-      probability:  1.0
   cloud:
     loadbalancer:
       ribbon:

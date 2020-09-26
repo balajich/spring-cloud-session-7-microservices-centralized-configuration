@@ -1,0 +1,7 @@
+spring:
+  zipkin:
+    sender:
+      type: rabbit
+  sleuth:
+    sampler:
+      probability:  1.0
