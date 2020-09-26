@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "ef4d7ae4-6390-4f52-8f46-32cfcf9a67b6",
+		"name": "spring-cloud-session-7-microservices-centralized-configuration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1-Get employee report using report-api-via-gateway",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/report-api/100",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"report-api",
+						"100"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get employee-api configurations with default profile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8888/employee-api/default",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"employee-api",
+						"default"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get report-api configurations with default profile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8888/report-api/default",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"report-api",
+						"default"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
