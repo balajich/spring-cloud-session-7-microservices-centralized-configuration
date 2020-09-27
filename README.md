@@ -12,7 +12,7 @@ to read configurations from configuration server microservice (config-server).
 # Source Code 
 ``` git clone https://github.com/balajich/spring-cloud-session-7-microservices-centralized-configuration.git``` 
 # Video
-[![Spring Cloud Session 4 Inter Microservice Communication ASynchronous using RabbitMQ](https://img.youtube.com/vi/8CV8PDX8Kuc/0.jpg)](https://www.youtube.com/watch?v=8CV8PDX8Kuc)
+[![Spring Cloud Session-7 Centralized Configuration](https://img.youtube.com/vi/8CV8PDX8Kuc/0.jpg)](https://www.youtube.com/watch?v=8CV8PDX8Kuc)
 - https://youtu.be/8CV8PDX8Kuc
 # Architecture
 ![architecture](architecture.png "architecture")
