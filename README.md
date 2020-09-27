@@ -53,34 +53,38 @@ at  spring-cloud-session-7-microservices-centralized-configuration.postman_colle
 - Get Configurations of report-api  with **default** profile``` curl -s -L http://localhost:8888/report-api/default ```
  
 # Code
-In this section we will focus only employee-api and add sleuth and zipkin as dependency. This will automatically enable
-employee-api to write trace information to zipkin queue that is present in RabbitMQ Server. Note the configs are same for 
-other microservices.
+- All the microservices configurations are present in folder **config-repo**
+- In config-repo folder **application.yml** contains common configurations across microservices
+- Save every micorservice configuration with microservicename.yml. This will be default profile for the microservice
+- For example employee-api.yml contains a configuration of employee-api microservice with default profile.
+- Every microservice should have **boostrap.yml** that contains information to connect to config server.
+- Every microservice should have **spring-cloud-config-server** and **spring-retry** as dependency
 
-**pom.xml**
+**pom.xml** for employee-api
 ```xml
-         <dependency>
-             <groupId>org.springframework.cloud</groupId>
-             <artifactId>spring-cloud-starter-sleuth</artifactId>
-         </dependency>
-         <dependency>
-             <groupId>org.springframework.cloud</groupId>
-             <artifactId>spring-cloud-starter-zipkin</artifactId>
-         </dependency>
-         <dependency>
-             <groupId>org.springframework.cloud</groupId>
-             <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
-         </dependency>
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-config</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.retry</groupId>
+    <artifactId>spring-retry</artifactId>
+</dependency>
 ```
-**application.yml** in employee-api.  Asking zipkin to use RabbitMQ as messagebus and Sleuth to send every trace information.
-By default, Sleuth will send only 10% of trace information.
+**boostrap.yml** of employee-api, Where it points to configuration server
 ```yaml
- zipkin:
-     sender:
-       type: rabbit
-   sleuth:
-     sampler:
-       probability:  1.0
+ app.config-server: localhost
+ 
+ spring:
+   application.name: employee-api
+   cloud.config:
+     failFast: true
+     retry:
+       initialInterval: 3000
+       multiplier: 1.3
+       maxInterval: 10000
+       maxAttempts: 20
+     uri: http://localhost:8888
 ```
 # References
 - Spring Microservices in Action by John Carnell 
