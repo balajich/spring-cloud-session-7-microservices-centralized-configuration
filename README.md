@@ -1,7 +1,7 @@
 # Spring Cloud Session-7 Centralized Configuration
 In  this tutorial we are going to learn how to manage configurations of microservices. The configurations  
 of microservices are saved in central configuration server.We are going to use **spring-cloud-config-server** to centrally
-manage configurations.
+manage configurations of all microservices.
 
 **Overview**
 - Start spring-cloud-config-server on port 8888
