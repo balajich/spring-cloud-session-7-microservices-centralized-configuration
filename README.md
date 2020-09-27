@@ -53,9 +53,9 @@ at  spring-cloud-session-7-microservices-centralized-configuration.postman_colle
 - Get Configurations of report-api  with **default** profile``` curl -s -L http://localhost:8888/report-api/default ```
  
 # Code
-- All the microservices configurations are present in folder **config-repo**
+- All the microservices configurations are present in a folder **config-repo**
 - In config-repo folder **application.yml** contains common configurations across microservices
-- Save every micorservice configuration with microservicename.yml. This will be default profile for the microservice
+- Save every microservice configuration with microservicename.yml. This will be default profile for the microservice
 - For example employee-api.yml contains a configuration of employee-api microservice with default profile.
 - Every microservice should have **boostrap.yml** that contains information to connect to config server.
 - Every microservice should have **spring-cloud-config-server** and **spring-retry** as dependency

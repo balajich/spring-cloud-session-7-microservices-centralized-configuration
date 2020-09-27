@@ -9,7 +9,7 @@ spring:
     config:
       server:
         native:
-          searchLocations: file:${PWD}/config-repo
+          searchLocations: ./config-repo
   zipkin:
     sender:
       type: rabbit
